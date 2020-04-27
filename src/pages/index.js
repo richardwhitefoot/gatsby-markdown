@@ -1,7 +1,22 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
+import styled from "styled-components"
+
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+
+const PostLink = styled(Link)`
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const PostTitle = styled.h3`
+  margin-bottom: 20px;
+  color: blue;
+`
 
 export default ({ data }) => { 
   console.log(data)
@@ -14,7 +29,9 @@ export default ({ data }) => {
       {
         data.allMarkdownRemark.edges.map(({node}) => (
          <div key={node.id}>
-          <span>{ node.frontmatter.title } - {node.frontmatter.date }</span>
+          <PostLink to={node.fields.slug}>
+            <PostTitle>{ node.frontmatter.title } - {node.frontmatter.date }</PostTitle>
+          </PostLink>
           <p>{ node.excerpt }</p>
          </div>
         ))
